@@ -1,0 +1,16 @@
+node_modules/
+logs/
+dist/
+.env
+.env.local
+.env.*.local
+*.log
+*.flag
+storageState.json
+browser-profile/
+playwright-report/
+test-results/
+.DS_Store
+Thumbs.db
+*.pem
+credentials.*
