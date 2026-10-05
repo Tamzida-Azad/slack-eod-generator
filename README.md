@@ -27,7 +27,7 @@ It opens Slack in a dedicated Chromium profile, reads **your** messages from one
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/slack-eod-generator.git
+git clone https://github.com/Tamzida-Azad/slack-eod-generator.git
 cd slack-eod-generator
 npm install
 npx playwright install chromium
