@@ -244,11 +244,26 @@ function cleanBody(body: string): string {
 }
 
 function resolveChannelKey(channelName: string): ChannelKey {
-  const key = channelName.replace(/^#/, '').trim().toLowerCase() as ChannelKey;
-  if (!config.slack.channels[key]) {
-    throw new Error(`Unknown channel: ${channelName}`);
+  const raw = channelName.replace(/^#/, '').trim();
+  const lower = raw.toLowerCase();
+  const logicalKeys: Record<string, ChannelKey> = {
+    sourcea: 'sourceA',
+    sourceb: 'sourceB',
+    eod: 'eod',
+  };
+  if (logicalKeys[lower]) {
+    return logicalKeys[lower];
   }
-  return key;
+  const byConfigKey = config.slack.channels[raw as ChannelKey];
+  if (byConfigKey) {
+    return raw as ChannelKey;
+  }
+  for (const [key, meta] of Object.entries(config.slack.channels) as [ChannelKey, { name: string }][]) {
+    if (meta.name.toLowerCase() === lower) {
+      return key;
+    }
+  }
+  throw new Error(`Unknown channel: ${channelName}`);
 }
 
 export async function openChannel(page: Page, channelName: string): Promise<void> {
